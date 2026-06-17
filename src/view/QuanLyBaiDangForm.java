@@ -52,6 +52,8 @@ public class QuanLyBaiDangForm extends javax.swing.JFrame {
         btnXoa = new javax.swing.JButton();
         btnCapNhatTrangThai = new javax.swing.JButton();
         btnQuayLai = new javax.swing.JButton();
+        btnKhoaTaiKhoan = new javax.swing.JButton();
+        btnMoTaiKhoan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,13 +100,31 @@ public class QuanLyBaiDangForm extends javax.swing.JFrame {
             }
         });
 
+        btnKhoaTaiKhoan.setText("Khoá tài khoản");
+        btnKhoaTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKhoaTaiKhoanActionPerformed(evt);
+            }
+        });
+
+        btnMoTaiKhoan.setText("Mở tài khoản");
+        btnMoTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoTaiKhoanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnKhoaTaiKhoan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMoTaiKhoan)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -126,7 +146,11 @@ public class QuanLyBaiDangForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(45, 45, 45)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnKhoaTaiKhoan)
+                        .addComponent(btnMoTaiKhoan)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSua)
@@ -255,6 +279,60 @@ JOptionPane.showMessageDialog(
 );
     }//GEN-LAST:event_btnSuaActionPerformed
 
+    private void btnKhoaTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoaTaiKhoanActionPerformed
+        int selectedRow = tblBaiDang.getSelectedRow(); 
+    
+    if (selectedRow == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn một bài đăng để khóa tài khoản người đăng!");
+        return;
+    }
+    
+    // 2. Sử dụng tài khoản mẫu "user1" trong hệ thống dữ liệu để demo cho thầy cô xem
+    String usernameCanKhoa = "user1"; 
+    
+    // 3. Tìm tài khoản trong DuLieu.dsUser và cập nhật trạng thái bị khóa (true)
+    boolean timThay = false;
+    for (model.User u : model.DuLieu.dsUser) {
+        if (u.getUsername().equals(usernameCanKhoa)) {
+            u.setLocked(true); // Đổi trạng thái tài khoản thành Bị Khóa
+            timThay = true;
+            break;
+        }
+    }
+    
+    // 4. Bật hộp thoại thông báo thành công cho Admin biết
+    if (timThay) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Đã khóa thành công tài khoản người dùng: " + usernameCanKhoa);
+    }// TODO add your handling code here:
+    }//GEN-LAST:event_btnKhoaTaiKhoanActionPerformed
+
+    private void btnMoTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoTaiKhoanActionPerformed
+        // 1. Kiểm tra xem người dùng đã chọn dòng nào trên bảng chưa
+    int selectedRow = tblBaiDang.getSelectedRow();
+    if (selectedRow == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn một bài đăng để mở khóa tài khoản!");
+        return;
+    }
+    
+    // 2. Tài khoản demo thực tế
+    String usernameCanMo = "user1"; 
+    
+    // 3. Tìm tài khoản trong danh sách và chuyển trạng thái hoạt động trở lại (false)
+    boolean timThay = false;
+    for (model.User u : model.DuLieu.dsUser) {
+        if (u.getUsername().equals(usernameCanMo)) {
+            u.setLocked(false); // Chuyển sang trạng thái mở khóa
+            timThay = true;
+            break;
+        }
+    }
+    
+    // 4. Thông báo mở thành công
+    if (timThay) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Đã mở khóa thành công tài khoản người dùng: " + usernameCanMo);
+    }// TODO add your handling code here:
+    }//GEN-LAST:event_btnMoTaiKhoanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -282,6 +360,8 @@ JOptionPane.showMessageDialog(
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhatTrangThai;
+    private javax.swing.JButton btnKhoaTaiKhoan;
+    private javax.swing.JButton btnMoTaiKhoan;
     private javax.swing.JButton btnQuayLai;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnXoa;
