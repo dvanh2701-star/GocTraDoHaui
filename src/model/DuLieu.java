@@ -6,8 +6,13 @@ public class DuLieu {
 
     public static ArrayList<BaiDang> dsBaiDang =
             new ArrayList<>();
+    public static ArrayList<User> dsUser = new ArrayList<>();
 
     static {
+        // Thêm sẵn vài tài khoản mẫu để test chức năng
+        dsUser.add(new User("admin", "123", "Nguyễn Văn A", false));
+        dsUser.add(new User("user1", "123", "Trần Thị B", false));
+        dsUser.add(new User("user2", "123", "Lê Văn C", true));
 
     dsBaiDang.add(new BaiDang(
             "Mất ví da màu đen",
@@ -88,6 +93,6 @@ public class DuLieu {
             "0910000000",
             "Còn đồ"
     ));
-
+    
 }
 }
